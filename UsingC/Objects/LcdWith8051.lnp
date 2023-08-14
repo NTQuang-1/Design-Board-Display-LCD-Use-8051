@@ -1,0 +1,4 @@
+".\Objects\main.obj",
+".\Objects\LCD.obj" 
+TO ".\Objects\LcdWith8051" 
+PRINT(".\Listings\LcdWith8051.m51") RAMSIZE(256) 

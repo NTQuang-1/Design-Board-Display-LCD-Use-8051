@@ -1,0 +1,108 @@
+C51 COMPILER V9.60.7.0   LCD                                                               08/14/2023 15:57:48 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN .\Objects\LCD.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE LCD.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\LCD.l
+                    -st) TABS(2) OBJECT(.\Objects\LCD.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <LCD.H>
+   3          
+   4          void delay_ms(int ms){
+   5   1        TMOD = 0x01;
+   6   1        while(ms--){
+   7   2          TH0 = 0xFC;
+   8   2          TL0 = 0x18;
+   9   2          TR0 = 1;
+  10   2          while(!TF0);
+  11   2          TR0 = 0;
+  12   2          TF0 = 0;
+  13   2        }
+  14   1        TMOD &= 0x00;
+  15   1      }
+  16          
+  17          void led_display(int choice){ 
+  18   1        switch (choice){
+  19   2          case light_Odd:
+  20   2                  led_name_N1 = 0;
+  21   2                  led_name_T  = 1;
+  22   2                  led_name_Q  = 0;
+  23   2                  led_name_U  = 1;
+  24   2                  led_name_A  = 0;
+  25   2                  led_name_N2 = 1;
+  26   2                  led_name_G  = 0;
+  27   2                  delay_ms(500);
+  28   2          break;
+  29   2          case light_Even:
+  30   2                  led_name_N1 = 1;
+  31   2                  led_name_T  = 0;
+  32   2                  led_name_Q  = 1;
+  33   2                  led_name_U  = 0;
+  34   2                  led_name_A  = 1;
+  35   2                  led_name_N2 = 0;
+  36   2                  led_name_G  = 1;
+  37   2                  delay_ms(500);
+  38   2          break;
+  39   2          default: break;
+  40   2        }     
+  41   1      }
+  42          void lcd_init(){
+  43   1        lcd_cmd(lcd_clear);
+  44   1        lcd_cmd(lcd_5x7);
+  45   1        lcd_cmd(lcd_display_screen_and_turnOff_ptr);
+  46   1      }
+  47          
+  48          void lcd_cmd(unsigned char cmd){
+  49   1        lcd_data = cmd;
+  50   1        lcd_rs   = 0;
+  51   1        lcd_en   = 1;
+  52   1        lcd_en   = 0;
+  53   1        cmd <= 0x02 ? delay_ms(2):delay_ms(1);
+  54   1      }
+C51 COMPILER V9.60.7.0   LCD                                                               08/14/2023 15:57:48 PAGE 2   
+
+  55          
+  56          void lcd_chr_cp (char c){
+  57   1        lcd_rs   = 1;
+  58   1        lcd_data = c;
+  59   1        lcd_en   = 0;
+  60   1        lcd_en   = 1;
+  61   1        c <= 0x02 ? delay_ms(2):delay_ms(1);
+  62   1      }
+  63          
+  64          void lcd_str_cp(char *str){
+  65   1        unsigned char i = 0;
+  66   1        while(str[i]!=0){
+  67   2          lcd_chr_cp(str[i]);
+  68   2          i++;
+  69   2        }
+  70   1      }
+  71          
+  72          void lcd_gotoxy(int rows,int col){
+  73   1        int result;
+  74   1        col -= 1;
+  75   1        if(rows == 1){
+  76   2          result = 0x80 + col;
+  77   2        }
+  78   1        if(rows == 2){
+  79   2          result = 0xC0 + col;
+  80   2        }
+  81   1        lcd_cmd(result);
+  82   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    220    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
