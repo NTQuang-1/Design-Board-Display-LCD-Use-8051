@@ -24,7 +24,6 @@ void led_display(int choice){
 						led_name_A  = 0;
 						led_name_N2 = 1;
 						led_name_G  = 0;
-						delay_ms(500);
 		break;
 		case light_Even:
 						led_name_N1 = 1;
@@ -34,7 +33,6 @@ void led_display(int choice){
 						led_name_A  = 1;
 						led_name_N2 = 0;
 						led_name_G  = 1;
-						delay_ms(500);
 		break;
 		default: break;
 	}			

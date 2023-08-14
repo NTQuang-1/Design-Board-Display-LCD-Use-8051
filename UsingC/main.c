@@ -12,7 +12,7 @@ void lcd_effect (int choice){
 						lcd_str_cp(marks);
 						lcd_gotoxy(2,1);
 						lcd_str_cp(name);
-						delay_ms(1000);
+						delay_ms(500);
 			break;
 		case 2:
 						lcd_init();
@@ -21,6 +21,11 @@ void lcd_effect (int choice){
 							lcd_str_cp(marks);
 							lcd_gotoxy(2,15-i);
 							lcd_str_cp(name);
+							if(i%2 == 0){
+								led_display(light_Even);
+							}else {
+								led_display(light_Odd);
+							}
 							delay_ms(300);
 							lcd_cmd(lcd_clear);
 						}
@@ -32,6 +37,11 @@ void lcd_effect (int choice){
 							lcd_str_cp(marks);
 							lcd_gotoxy(2,i);
 							lcd_str_cp(name);
+							if(i%2 == 0){
+								led_display(light_Even);
+							}else {
+								led_display(light_Odd);
+							}
 							delay_ms(300);
 							lcd_cmd(lcd_clear);
 						}
@@ -41,11 +51,11 @@ void lcd_effect (int choice){
 }
 
 void main(){
-	
+	led_display(1);
+	delay_ms(500);
+	led_display(2);
+	delay_ms(500);
 	while(1){
-		lcd_cmd(lcd_clear);
-		led_display(1);
-		led_display(2);
 		lcd_effect(2);
 	}
 }
